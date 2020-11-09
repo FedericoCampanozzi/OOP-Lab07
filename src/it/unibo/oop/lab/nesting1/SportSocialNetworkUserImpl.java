@@ -27,40 +27,28 @@ public class SportSocialNetworkUserImpl<U extends User> extends SocialNetworkUse
     /**
      * Static {@link Sport} constant.
      */
-    public static final Sport SOCCER;
+    public static final Sport SOCCER = new Sport("SOCCER");
     /**
      * Static {@link Sport} constant.
      */
-    public static final Sport F1;
+    public static final Sport F1 = new Sport("F1");
     /**
      * Static {@link Sport} constant.
      */
-    public static final Sport MOTOGP;
+    public static final Sport MOTOGP = new Sport("MOTOGP");
     /**
      * Static {@link Sport} constant.
      */
-    public static final Sport VOLLEY;
+    public static final Sport VOLLEY = new Sport("VOLLEY");
     /**
      * Static {@link Sport} constant.
      */
-    public static final Sport BASKET;
+    public static final Sport BASKET = new Sport("BASKET");
     /**
      * Static {@link Sport} constant.
      */
-    public static final Sport BIKE;
-
-    /*
-     * TODO: initialize properly these sports
-     */
-    static {
-        SOCCER = null;
-        F1 = null;
-        MOTOGP = null;
-        VOLLEY = null;
-        BASKET = null;
-        BIKE = null;
-    }
-
+    public static final Sport BIKE = new Sport("BIKE");
+    
     /**
      * Field meant to keep track of the set of sports followed/done by a user.
      */
@@ -114,7 +102,7 @@ public class SportSocialNetworkUserImpl<U extends User> extends SocialNetworkUse
      */
     // TODO
     public void addSport(final Sport sport) {
-
+    	this.sports.add(sport);
     }
 
     /**
@@ -126,7 +114,7 @@ public class SportSocialNetworkUserImpl<U extends User> extends SocialNetworkUse
      */
     // TODO
     public boolean hasSport(final Sport s) {
-        return false;
+        return this.sports.contains(s);
     }
 
     /*
@@ -136,15 +124,35 @@ public class SportSocialNetworkUserImpl<U extends User> extends SocialNetworkUse
      * with its bare name.
      */
     public static final class Sport {
-        /*
-         * TODO
-         * 
-         * Redefine equals so that two sports are equal only if they feature the
-         * very same name. Remember that you must also redefine hashCode()!
-         */
-        @Override
-        public boolean equals(final Object o) {
-            return false;
-        }
+        private final String name;
+        
+    	public Sport(String name) {
+			this.name = name;
+		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + ((name == null) ? 0 : name.hashCode());
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			Sport other = (Sport) obj;
+			if (name == null) {
+				if (other.name != null)
+					return false;
+			} else if (!name.equals(other.name))
+				return false;
+			return true;
+		}
     }
 }
